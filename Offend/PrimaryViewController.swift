@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  PrimaryViewController
 //  Offend
 //
 //  Created by Jon Vogel on 3/9/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class PrimaryViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()

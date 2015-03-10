@@ -11,20 +11,45 @@ import XCTest
 
 class OffendTests: XCTestCase {
     
-    override func setUp() {
+  var delegate: AppDelegate?
+  
+  
+  
+  
+  override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    
+    self.delegate = UIApplication.sharedApplication().delegate as? AppDelegate
+    
+    
+    
+    
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+      
+      self.delegate = nil
+      
+      super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
+    func testAppLaunch() {
+      XCTAssertNotNil(self.delegate, "Delegate is Nil")
     }
+  
+  
+  func testWindowInstatniation(){
+    
+    XCTAssertNotNil(self.delegate?.window, "Window Not Nill")
+  
+  }
+  
+  func testForRootViewController(){
+    
+    
+    XCTAssertNotNil(self.delegate?.window?.rootViewController, "App has a root view controller")
+    
+  }
     
     func testPerformanceExample() {
         // This is an example of a performance test case.
