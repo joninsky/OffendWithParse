@@ -20,10 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var appParseKey = "OhF1OMRPtn1H51chOzSxtfic9vd56Aknqpg8FfWE"
     var appClientKey = "mNa69y5JRo3mRvsafomFYme1mFKYMSHv0XjbrObk"
     
-  
+    
     Parse.setApplicationId(appParseKey, clientKey: appClientKey)
     
-  
     
     
     return true

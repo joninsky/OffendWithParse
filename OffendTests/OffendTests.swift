@@ -11,7 +11,7 @@ import XCTest
 
 class OffendTests: XCTestCase {
     
-  var delegate: AppDelegate?
+  var delegate: AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate!
   
   
   
@@ -19,7 +19,7 @@ class OffendTests: XCTestCase {
   override func setUp() {
         super.setUp()
     
-    self.delegate = UIApplication.sharedApplication().delegate as? AppDelegate
+    //self.delegate = UIApplication.sharedApplication().delegate as? AppDelegate
     
     
     
@@ -28,7 +28,7 @@ class OffendTests: XCTestCase {
     
     override func tearDown() {
       
-      self.delegate = nil
+      //self.delegate = nil
       
       super.tearDown()
     }
@@ -40,14 +40,14 @@ class OffendTests: XCTestCase {
   
   func testWindowInstatniation(){
     
-    XCTAssertNotNil(self.delegate?.window, "Window Not Nill")
+    XCTAssertNotNil(self.delegate.window, "Window Not Nill")
   
   }
   
   func testForRootViewController(){
     
     
-    XCTAssertNotNil(self.delegate?.window?.rootViewController, "App has a root view controller")
+    XCTAssertNotNil(self.delegate.window!.rootViewController, "App has a root view controller")
     
   }
     

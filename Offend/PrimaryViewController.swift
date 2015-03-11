@@ -7,19 +7,97 @@
 //
 
 import UIKit
+import QuartzCore
 
-class PrimaryViewController: UIViewController {
+class PrimaryViewController: UIViewController, UITextViewDelegate{
 
+  //MARK: Properties
+  @IBOutlet weak var txtMyPhrase: UITextView!
+  @IBOutlet weak var generateButton: UIButton!
+  
+  var badWords: [AnyObject]?
+  var arrayOfWords = [String]()
+  
+  //MARK: Lifecycle methods
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view, typically from a nib.
+    self.txtMyPhrase.delegate = self
+    //Set up the borders of the UIElements
+    self.generateButton.layer.borderWidth = 2.0
+    self.generateButton.layer.borderColor = UIColor.blueColor().CGColor
+    self.generateButton.layer.cornerRadius = 5
+    self.txtMyPhrase.layer.borderWidth = 2.0
+    self.txtMyPhrase.layer.borderColor = UIColor.blueColor().CGColor
+    self.txtMyPhrase.layer.cornerRadius = 5
+    
+    //Set up the navigation controller apperance
+    self.navigationItem.title = "Offend"
+    self.navigationController?.navigationBar.barTintColor = UIColor.blueColor()
+    
+    var query = PFQuery(className: "Words") //as [String: AnyObject]
+    query.findObjectsInBackgroundWithBlock { (returnedData, error) -> Void in
+      if error != true {
+        for item in returnedData{
+          if let dictionaryForWord = item as? PFObject{
+            self.arrayOfWords.append(dictionaryForWord["word"] as String)
+          }
+        }
+      }
+    }
+    
+    
+    
+    
   }
-
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
+  
+  
+  //MARK: Text View delegate methods
+  
+  
+  func textViewDidBeginEditing(textView: UITextView) {
+    
+    self.txtMyPhrase.text = ""
   }
+  
+  
+  func textViewShouldEndEditing(textView: UITextView) -> Bool {
+    self.txtMyPhrase.resignFirstResponder()
+    return true
+  }
+  
 
+  //MARK: Action outlet
+  @IBAction func generate(sender: AnyObject) {
+    
+    self.txtMyPhrase.text = ""
+    
+    for item in self.arrayOfWords {
+      self.txtMyPhrase.text = self.txtMyPhrase.text + " " + item
+    }
+    
+    //self.txtMyPhrase.text = phraseToAddTo
+    
+    
+    
+    self.txtMyPhrase.resignFirstResponder()
+  }
+  
+  @IBAction func presentInfo(sender: AnyObject) {
+    
+    var alertController = UIAlertController(title: "Instructions", message: "Put an asterisk \"*\" where you want bad words to appear", preferredStyle: UIAlertControllerStyle.Alert)
+    
+    var dismissAction = UIAlertAction(title: "Fuck Off", style: UIAlertActionStyle.Default, handler: nil)
+    
+    alertController.addAction(dismissAction)
+    
+    self.presentViewController(alertController, animated: true, completion: nil)
+    
+  }
+  
+  //MARK: Self overide functions
+  override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+    self.txtMyPhrase.resignFirstResponder()
+  }
 
 }
 
