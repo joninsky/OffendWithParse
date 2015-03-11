@@ -24,6 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     Parse.setApplicationId(appParseKey, clientKey: appClientKey)
     
     
+    //Init the shared instance so that all words are populated. 
+    OffensiveEngine.sharedEngine
+    
     
     return true
   }

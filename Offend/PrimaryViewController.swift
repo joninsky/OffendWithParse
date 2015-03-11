@@ -34,20 +34,8 @@ class PrimaryViewController: UIViewController, UITextViewDelegate{
     self.navigationItem.title = "Offend"
     self.navigationController?.navigationBar.barTintColor = UIColor.blueColor()
     
-    var query = PFQuery(className: "Words") //as [String: AnyObject]
-    query.findObjectsInBackgroundWithBlock { (returnedData, error) -> Void in
-      if error != true {
-        for item in returnedData{
-          if let dictionaryForWord = item as? PFObject{
-            self.arrayOfWords.append(dictionaryForWord["word"] as String)
-          }
-        }
-      }
-    }
-    
-    
-    
-    
+    self.arrayOfWords = OffensiveEngine.sharedEngine.arrayOfWords
+
   }
   
   
@@ -69,17 +57,9 @@ class PrimaryViewController: UIViewController, UITextViewDelegate{
   //MARK: Action outlet
   @IBAction func generate(sender: AnyObject) {
     
-    self.txtMyPhrase.text = ""
+      let phraseToParse = self.txtMyPhrase.text
     
-    for item in self.arrayOfWords {
-      self.txtMyPhrase.text = self.txtMyPhrase.text + " " + item
-    }
-    
-    //self.txtMyPhrase.text = phraseToAddTo
-    
-    
-    
-    self.txtMyPhrase.resignFirstResponder()
+      self.txtMyPhrase.text = OffensiveEngine.sharedEngine.parseUserString(phraseToParse)
   }
   
   @IBAction func presentInfo(sender: AnyObject) {
@@ -98,6 +78,9 @@ class PrimaryViewController: UIViewController, UITextViewDelegate{
   override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
     self.txtMyPhrase.resignFirstResponder()
   }
+  
+  
+  
 
 }
 
