@@ -19,6 +19,7 @@ class PrimaryViewController: UIViewController, UITextViewDelegate{
   
   var userString: String = "Select to add your own words! Put an \"#\" where you want an offensive word to appear."
   
+  //var screenHeight: CGFloat?
   //MARK: Lifecycle methods
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -37,14 +38,14 @@ class PrimaryViewController: UIViewController, UITextViewDelegate{
     self.navigationController?.navigationBar.barTintColor = UIColor.blueColor()
     self.doneButton.enabled = false
     self.doneButton.title = nil
-
+    
   }
   
   
   //MARK: Text View delegate methods
   func textViewDidBeginEditing(textView: UITextView) {
     
-    self.txtViewHeight.constant = 200
+    self.txtViewHeight.constant = 120
     self.view.needsUpdateConstraints()
     
     UIView.animateWithDuration(1, animations: { () -> Void in
@@ -58,10 +59,10 @@ class PrimaryViewController: UIViewController, UITextViewDelegate{
   
   
   func textViewShouldEndEditing(textView: UITextView) -> Bool {
-    self.txtViewHeight.constant = 260
+    self.txtViewHeight.constant = 8
     self.view.needsUpdateConstraints()
     
-    UIView.animateWithDuration(1, animations: { () -> Void in
+    UIView.animateWithDuration(0.5, animations: { () -> Void in
       self.view.layoutIfNeeded()
     })
     
@@ -77,9 +78,9 @@ class PrimaryViewController: UIViewController, UITextViewDelegate{
 
   //MARK: Action outlet
   @IBAction func generate(sender: AnyObject) {
-    if self.txtMyPhrase.text != ""{
-      self.userString = self.txtMyPhrase.text
-    }
+   
+
+    self.txtMyPhrase.resignFirstResponder()
     
     var phraseToParse: String = self.userString
     self.txtMyPhrase.text = OffensiveEngine.sharedEngine.parseUserString(phraseToParse)

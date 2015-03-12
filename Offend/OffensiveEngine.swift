@@ -52,7 +52,7 @@ class OffensiveEngine: NSObject {
       }
       
       return "\(self.arrayOfWords[Int(positionOne)])" + " " + "\(self.arrayOfWords[Int(positionTwo)])"
-    }else if (theString.rangeOfString("*") == nil){
+    }else if (theString.rangeOfString("#") == nil){
       return "In order to generate an offensive word we need at least one \"#\" or nothing, Follow the Fucking directions."
     }
 
@@ -61,7 +61,14 @@ class OffensiveEngine: NSObject {
     var arrayOfAppendedWords = [String]()
     for item in arrayOfComponents {
       if item == arrayOfComponents.last {
-        stringToReturn = stringToReturn + item
+        if item != "#"{
+          stringToReturn = stringToReturn + item
+        }else{
+          var position = arc4random_uniform(UInt32(self.arrayOfWords.count))
+          var word = self.arrayOfWords[Int(position)]
+          
+          stringToReturn = stringToReturn + item + "\(word)"
+        }
       }else{
         var position = arc4random_uniform(UInt32(self.arrayOfWords.count))
         var word = self.arrayOfWords[Int(position)]
