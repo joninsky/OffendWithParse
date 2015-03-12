@@ -14,9 +14,10 @@ class PrimaryViewController: UIViewController, UITextViewDelegate{
   //MARK: Properties
   @IBOutlet weak var txtMyPhrase: UITextView!
   @IBOutlet weak var generateButton: UIButton!
+  @IBOutlet var doneButton: UIBarButtonItem!
+  @IBOutlet weak var txtViewHeight: NSLayoutConstraint!
   
-  var badWords: [AnyObject]?
-  var arrayOfWords = [String]()
+  var userString: String = "Select to add your own words! Put an \"#\" where you want an offensive word to appear."
   
   //MARK: Lifecycle methods
   override func viewDidLoad() {
@@ -29,42 +30,64 @@ class PrimaryViewController: UIViewController, UITextViewDelegate{
     self.txtMyPhrase.layer.borderWidth = 2.0
     self.txtMyPhrase.layer.borderColor = UIColor.blueColor().CGColor
     self.txtMyPhrase.layer.cornerRadius = 5
+    self.txtMyPhrase.text = self.userString
     
     //Set up the navigation controller apperance
     self.navigationItem.title = "Offend"
     self.navigationController?.navigationBar.barTintColor = UIColor.blueColor()
-    
-    self.arrayOfWords = OffensiveEngine.sharedEngine.arrayOfWords
+    self.doneButton.enabled = false
+    self.doneButton.title = nil
 
   }
   
   
   //MARK: Text View delegate methods
-  
-  
   func textViewDidBeginEditing(textView: UITextView) {
+    
+    self.txtViewHeight.constant = 200
+    self.view.needsUpdateConstraints()
+    
+    UIView.animateWithDuration(1, animations: { () -> Void in
+      self.view.layoutIfNeeded()
+    })
+    self.doneButton.enabled = true
+    self.doneButton.title = "Done"
     
     self.txtMyPhrase.text = ""
   }
   
   
   func textViewShouldEndEditing(textView: UITextView) -> Bool {
+    self.txtViewHeight.constant = 260
+    self.view.needsUpdateConstraints()
+    
+    UIView.animateWithDuration(1, animations: { () -> Void in
+      self.view.layoutIfNeeded()
+    })
+    
+    self.doneButton.enabled = false
+    self.doneButton.title = nil
+    self.userString = self.txtMyPhrase.text
     self.txtMyPhrase.resignFirstResponder()
     return true
   }
   
+  
+  
 
   //MARK: Action outlet
   @IBAction func generate(sender: AnyObject) {
+    if self.txtMyPhrase.text != ""{
+      self.userString = self.txtMyPhrase.text
+    }
     
-      let phraseToParse = self.txtMyPhrase.text
-    
-      self.txtMyPhrase.text = OffensiveEngine.sharedEngine.parseUserString(phraseToParse)
+    var phraseToParse: String = self.userString
+    self.txtMyPhrase.text = OffensiveEngine.sharedEngine.parseUserString(phraseToParse)
   }
   
   @IBAction func presentInfo(sender: AnyObject) {
     
-    var alertController = UIAlertController(title: "Instructions", message: "Put an asterisk \"*\" where you want bad words to appear", preferredStyle: UIAlertControllerStyle.Alert)
+    var alertController = UIAlertController(title: "Instructions", message: "Put an asterisk \"#\" where you want bad words to appear", preferredStyle: UIAlertControllerStyle.Alert)
     
     var dismissAction = UIAlertAction(title: "Fuck Off", style: UIAlertActionStyle.Default, handler: nil)
     
@@ -73,6 +96,12 @@ class PrimaryViewController: UIViewController, UITextViewDelegate{
     self.presentViewController(alertController, animated: true, completion: nil)
     
   }
+  
+  
+  @IBAction func doneButtonPressed(sender: AnyObject) {
+    self.txtMyPhrase.resignFirstResponder()
+  }
+  
   
   //MARK: Self overide functions
   override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {

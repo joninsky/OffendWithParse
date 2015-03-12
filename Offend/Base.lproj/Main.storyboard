@@ -80,11 +80,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Select to add your own words! Put an &quot;*&quot; where you want an offensive word to appear. " textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Qo0-B8-bxC">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Select to add your own words! Put an &quot;#&quot; where you want an offensive word to appear. " textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Qo0-B8-bxC">
                                 <rect key="frame" x="16" y="72" width="568" height="267"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="267" id="Vdr-N2-tqx"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="Marion-Regular" family="Marion" pointSize="24"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardType="twitter" returnKeyType="done"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BLA-Qb-nGZ">
                                 <rect key="frame" x="16" y="347" width="568" height="30"/>
@@ -109,22 +112,27 @@
                         <constraints>
                             <constraint firstItem="Qo0-B8-bxC" firstAttribute="trailing" secondItem="glm-7u-o2B" secondAttribute="trailingMargin" id="0Nj-7Z-b0w"/>
                             <constraint firstItem="BLA-Qb-nGZ" firstAttribute="leading" secondItem="glm-7u-o2B" secondAttribute="leadingMargin" id="2oh-rw-icu"/>
+                            <constraint firstItem="BLA-Qb-nGZ" firstAttribute="top" secondItem="Qo0-B8-bxC" secondAttribute="bottom" constant="8" id="8Mo-jj-Gu2"/>
                             <constraint firstItem="Oks-z2-IZe" firstAttribute="top" secondItem="2o3-o1-za1" secondAttribute="bottom" constant="8" id="DsC-Va-3HD"/>
-                            <constraint firstItem="BLA-Qb-nGZ" firstAttribute="top" secondItem="Qo0-B8-bxC" secondAttribute="bottom" constant="8" id="Lmh-87-QbS"/>
                             <constraint firstItem="BLA-Qb-nGZ" firstAttribute="trailing" secondItem="glm-7u-o2B" secondAttribute="trailingMargin" id="NkN-qi-Afc"/>
                             <constraint firstItem="Qo0-B8-bxC" firstAttribute="leading" secondItem="glm-7u-o2B" secondAttribute="leadingMargin" id="slv-KZ-kOJ"/>
-                            <constraint firstItem="BLA-Qb-nGZ" firstAttribute="top" secondItem="Qo0-B8-bxC" secondAttribute="bottom" constant="8" id="wyL-dj-udf"/>
-                            <constraint firstItem="xai-7M-J1k" firstAttribute="top" secondItem="BLA-Qb-nGZ" secondAttribute="bottom" constant="174" id="z0r-WQ-qhg"/>
                             <constraint firstItem="Oks-z2-IZe" firstAttribute="leading" secondItem="glm-7u-o2B" secondAttribute="leadingMargin" id="zVS-Sa-275"/>
                             <constraint firstItem="Qo0-B8-bxC" firstAttribute="top" secondItem="2o3-o1-za1" secondAttribute="bottom" constant="8" id="zaP-e4-XcV"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="iIQ-uY-dVj">
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="TfA-xc-MWa">
+                            <connections>
+                                <action selector="doneButtonPressed:" destination="ZUo-JE-kMv" id="yKI-pj-ccH"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="b45-da-xzi"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="doneButton" destination="TfA-xc-MWa" id="5fN-Tj-nXX"/>
                         <outlet property="generateButton" destination="BLA-Qb-nGZ" id="tk0-Vw-0Tj"/>
                         <outlet property="txtMyPhrase" destination="Qo0-B8-bxC" id="dXg-Zc-ke0"/>
+                        <outlet property="txtViewHeight" destination="Vdr-N2-tqx" id="ZyN-xa-965"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1ec-tM-2q4" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -40,9 +40,6 @@ class OffensiveEngine: NSObject {
         
       }
     }
-  
-
-    
   }
   
   func parseUserString(theString: String) -> String {
@@ -56,21 +53,21 @@ class OffensiveEngine: NSObject {
       
       return "\(self.arrayOfWords[Int(positionOne)])" + " " + "\(self.arrayOfWords[Int(positionTwo)])"
     }else if (theString.rangeOfString("*") == nil){
-      return "In order to generate an offensive word we need at least one \"*\" or nothing, Follow the Fucking directions"
+      return "In order to generate an offensive word we need at least one \"#\" or nothing, Follow the Fucking directions."
     }
-    var count: Int = 0
-    for Character in theString {
-      if Character == "*"{
-        ++count
-      }
-    }
-    
-    
+
     var stringToReturn = ""
-    let arrayOfComponents = theString.componentsSeparatedByString("*")
-    
+    let arrayOfComponents = theString.componentsSeparatedByString("#")
+    var arrayOfAppendedWords = [String]()
     for item in arrayOfComponents {
-      stringToReturn = stringToReturn + item + "\(self.arrayOfWords[5])"
+      if item == arrayOfComponents.last {
+        stringToReturn = stringToReturn + item
+      }else{
+        var position = arc4random_uniform(UInt32(self.arrayOfWords.count))
+        var word = self.arrayOfWords[Int(position)]
+        
+        stringToReturn = stringToReturn + item + "\(word)"
+      }
     }
     
     
@@ -78,5 +75,5 @@ class OffensiveEngine: NSObject {
   }
   
   
-
+//End Class
 }
