@@ -10,13 +10,59 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Offend/OffensiveEngine.swift"
-            timestampString = "447888668.387567"
+            timestampString = "447974220.479251"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
             landmarkName = "parseUserString(_:)"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Offend/OffensiveEngine.swift"
+            timestampString = "447974726.903408"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "getAllWords()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Offend.OffensiveEngine.((getAllWords in _D29C4AA9FD55BB522DE4D79561BD6DBB) (Offend.OffensiveEngine) -&gt; () -&gt; ()).(closure #1)"
+                  moduleName = "Offend"
+                  urlString = "file:///Users/joninsky/Desktop/Offend/Offend/OffensiveEngine.swift"
+                  timestampString = "447974750.156655"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "1541">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "OffendTests.OffensiveEngine.((getAllWords in _F4AD923ED543E46C6FABBBAC383EBEA6) (OffendTests.OffensiveEngine) -&gt; () -&gt; ()).(closure #1)"
+                  moduleName = "OffendTests"
+                  urlString = "file:///Users/joninsky/Desktop/Offend/Offend/OffensiveEngine.swift"
+                  timestampString = "447974750.430466"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37"
+                  offsetFromSymbolStart = "1541">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

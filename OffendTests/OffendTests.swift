@@ -8,19 +8,17 @@
 
 import UIKit
 import XCTest
+import Offend
 
 class OffendTests: XCTestCase {
-    
-  var delegate: AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate!
   
   
-  
+  var OE = OffensiveEngine()
   
   override func setUp() {
         super.setUp()
-    
-    //self.delegate = UIApplication.sharedApplication().delegate as? AppDelegate
-    
+  
+    OffensiveEngine.sharedEngine
     
     
     
@@ -33,29 +31,49 @@ class OffendTests: XCTestCase {
       super.tearDown()
     }
     
-    func testAppLaunch() {
-      XCTAssertNotNil(self.delegate, "Delegate is Nil")
+    func testOEInstantiation() {
+      XCTAssertNotNil(self.OE, "OE is Nil")
     }
   
-  
-  func testWindowInstatniation(){
-    
-    XCTAssertNotNil(self.delegate.window, "Window Not Nill")
-  
-  }
-  
-  func testForRootViewController(){
-    
-    
-    XCTAssertNotNil(self.delegate.window!.rootViewController, "App has a root view controller")
-    
-  }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock() {
-            // Put the code you want to measure the time of here.
-        }
+    func testOESharedInstance(){
+      XCTAssertNotNil(OffensiveEngine.sharedEngine, "OE Shared instance is nil")
     }
+  
+  func testOEArrayOfWordsNotNill() {
+    XCTAssertTrue(OffensiveEngine.sharedEngine.arrayOfWords.count > 0, "Array of words in OE is 0")
+  }
+  
+  func testOEParseStringWithEmpty(){
+  
+    var theString = OE.parseUserString("")
+    
+    let returnedWords = theString.componentsSeparatedByString(" ")
+    
+    XCTAssert(returnedWords.count == 2, "Didn't get the right amount of words back")
+    
+  }
+  
+  func testOEParseStringWithNoHash(){
+    
+    let theString = "No Good"
+    
+    XCTAssert(OffensiveEngine.sharedEngine.parseUserString(theString) == "In order to generate an offensive word we need at least one \"#\" or nothing, Follow the Fucking directions.", "Did not get back expected string")
+  }
+  
+  func testOEParseWithTMultipleHash() {
+    
+    let theString = OE.parseUserString("# # # # #")
+    
+    let results = theString.componentsSeparatedByString(" ")
+    
+    XCTAssert(results.count == 5, "Didn't get the right count")
+    
+    
+    
+  }
+  
+  
+  
+  
     
 }

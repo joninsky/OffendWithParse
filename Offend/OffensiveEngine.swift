@@ -25,6 +25,10 @@ class OffensiveEngine: NSObject {
     self.getAllWords()
     
   }
+  
+  func initForTesting(){
+    self.arrayOfWords = ["Shit", "Fuck", "Damn", "Hell"]
+  }
 
   
   private func getAllWords() {
@@ -43,6 +47,10 @@ class OffensiveEngine: NSObject {
   }
   
   func parseUserString(theString: String) -> String {
+    if self.arrayOfWords.isEmpty {
+      self.getAllWords()
+      return "No Offensive Words Available"
+    }
     if theString.isEmpty {
       var positionOne: UInt32 = arc4random_uniform(UInt32(self.arrayOfWords.count))
       var positionTwo: UInt32 = arc4random_uniform(UInt32(self.arrayOfWords.count))
