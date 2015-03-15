@@ -44,8 +44,11 @@ class AllWordViewController: UIViewController, UITableViewDataSource, UITableVie
     
     
     let Cell = tableView.dequeueReusableCellWithIdentifier("allCell", forIndexPath: indexPath) as AllCell
-    
-    
+    Cell.layer.borderWidth = 2.0
+    Cell.layer.borderColor = UIColor.blueColor().CGColor
+    Cell.layer.cornerRadius = 5
+
+  
     if self.arrayOfAllWords == nil {
       
       Cell.lblDefinition.text = "No Words, Check Internet Connection."
@@ -53,10 +56,17 @@ class AllWordViewController: UIViewController, UITableViewDataSource, UITableVie
     }else{
       
       var word = self.arrayOfAllWords![indexPath.row]
+      var w = word["word"] as? String
       
-      Cell.lblWord.text = word["word"] as? String
+      Cell.lblWord.text = " \(w!)"
       Cell.lblDefinition.text = word["definition"] as?String
-      
+      Cell.lblWord?.layer.borderWidth = 1.0
+      Cell.lblWord?.layer.borderColor = UIColor.blueColor().CGColor
+      Cell.lblWord?.layer.cornerRadius = 5
+      Cell.lblDefinition?.layer.borderWidth = 1.0
+      Cell.lblDefinition?.layer.borderColor = UIColor.blueColor().CGColor
+      Cell.lblDefinition?.layer.cornerRadius = 5
+
     }
     
     

@@ -587,7 +587,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text To Share" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sva-p6-KwU">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text To Share" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sva-p6-KwU">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="100" id="Ti4-Uy-NOO"/>
@@ -643,6 +643,9 @@
                                         <include reference="wcu-I0-zXB"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <action selector="shareAction:" destination="y28-QU-ujk" eventType="touchUpInside" id="ubj-z3-Vo3"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -694,6 +697,10 @@
                     <navigationItem key="navigationItem" title="Title" id="7CG-U4-Y2C">
                         <barButtonItem key="rightBarButtonItem" systemItem="camera" id="XuL-i5-vJc"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="shareButton" destination="IRx-zh-Y7V" id="0iZ-M5-vzv"/>
+                        <outlet property="txtPhraseToShare" destination="Sva-p6-KwU" id="S3R-Vz-dxr"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SUp-ab-UgT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

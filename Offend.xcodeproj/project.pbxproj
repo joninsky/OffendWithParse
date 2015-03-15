@@ -15,6 +15,10 @@
 		4EB072701AB3A1C700BB230A /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3292D1AAF811500E19C5F /* AddViewController.swift */; };
 		4EBC75B81AB522B900303476 /* AllCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBC75B71AB522B900303476 /* AllCell.swift */; };
 		4EBC75B91AB522B900303476 /* AllCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBC75B71AB522B900303476 /* AllCell.swift */; };
+		4EBC75BC1AB6277200303476 /* myModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4EBC75BA1AB6277200303476 /* myModel.xcdatamodeld */; };
+		4EBC75BD1AB6277200303476 /* myModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4EBC75BA1AB6277200303476 /* myModel.xcdatamodeld */; };
+		4EBC75BF1AB6297100303476 /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBC75BE1AB6297100303476 /* GlobalVariables.swift */; };
+		4EBC75C01AB6297100303476 /* GlobalVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EBC75BE1AB6297100303476 /* GlobalVariables.swift */; };
 		4EC4DC8B1AB0E18100459E38 /* OffensiveEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC4DC8A1AB0E18100459E38 /* OffensiveEngine.swift */; };
 		4EC4DC8C1AB0E18100459E38 /* OffensiveEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC4DC8A1AB0E18100459E38 /* OffensiveEngine.swift */; };
 		4ED3292E1AAF811500E19C5F /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED3292D1AAF811500E19C5F /* AddViewController.swift */; };
@@ -62,6 +66,8 @@
 /* Begin PBXFileReference section */
 		4E4BC3161AB510D500BFD478 /* AllWordsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllWordsViewController.swift; sourceTree = "<group>"; };
 		4EBC75B71AB522B900303476 /* AllCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllCell.swift; sourceTree = "<group>"; };
+		4EBC75BB1AB6277200303476 /* myModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = myModel.xcdatamodel; sourceTree = "<group>"; };
+		4EBC75BE1AB6297100303476 /* GlobalVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalVariables.swift; sourceTree = "<group>"; };
 		4EC4DC8A1AB0E18100459E38 /* OffensiveEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OffensiveEngine.swift; sourceTree = "<group>"; };
 		4ED3292D1AAF811500E19C5F /* AddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		4ED391D61AB39B0A00FE13D3 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -138,6 +144,8 @@
 			children = (
 				4EC4DC8A1AB0E18100459E38 /* OffensiveEngine.swift */,
 				4EE0CBB11AB3CE1600F4BD85 /* GlobalStuff.swift */,
+				4EBC75BA1AB6277200303476 /* myModel.xcdatamodeld */,
+				4EBC75BE1AB6297100303476 /* GlobalVariables.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -348,7 +356,9 @@
 				4EBC75B81AB522B900303476 /* AllCell.swift in Sources */,
 				4E4BC3171AB510D500BFD478 /* AllWordsViewController.swift in Sources */,
 				4EE0CBB21AB3CE1600F4BD85 /* GlobalStuff.swift in Sources */,
+				4EBC75BF1AB6297100303476 /* GlobalVariables.swift in Sources */,
 				4ED45D7E1AAE70FC000158D5 /* AppDelegate.swift in Sources */,
+				4EBC75BC1AB6277200303476 /* myModel.xcdatamodeld in Sources */,
 				4ED391D71AB39B0A00FE13D3 /* ShareViewController.swift in Sources */,
 				4ED3292E1AAF811500E19C5F /* AddViewController.swift in Sources */,
 				4EC4DC8B1AB0E18100459E38 /* OffensiveEngine.swift in Sources */,
@@ -362,8 +372,10 @@
 				4EBC75B91AB522B900303476 /* AllCell.swift in Sources */,
 				4EB0726D1AB3A1B500BB230A /* ShareViewController.swift in Sources */,
 				4EB0726E1AB3A1B900BB230A /* PrimaryViewController.swift in Sources */,
+				4EBC75BD1AB6277200303476 /* myModel.xcdatamodeld in Sources */,
 				4ED45D941AAE70FC000158D5 /* OffendTests.swift in Sources */,
 				4EB0726F1AB3A1C300BB230A /* AppDelegate.swift in Sources */,
+				4EBC75C01AB6297100303476 /* GlobalVariables.swift in Sources */,
 				4EC4DC8C1AB0E18100459E38 /* OffensiveEngine.swift in Sources */,
 				4EB072701AB3A1C700BB230A /* AddViewController.swift in Sources */,
 				4E4BC3181AB510D500BFD478 /* AllWordsViewController.swift in Sources */,
@@ -585,6 +597,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		4EBC75BA1AB6277200303476 /* myModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4EBC75BB1AB6277200303476 /* myModel.xcdatamodel */,
+			);
+			currentVersion = 4EBC75BB1AB6277200303476 /* myModel.xcdatamodel */;
+			path = myModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 4ED45D701AAE70FB000158D5 /* Project object */;
 }

@@ -124,6 +124,29 @@ class OffensiveEngine: NSObject {
     }
   }
   
+  func checkIfWordExists(theWord: String, completion: (Bool) -> Void){
+    
+    let query = PFQuery(className: "Words")
+    query.whereKey("word", equalTo: "\(theWord)")
+    
+    query!.findObjectsInBackgroundWithBlock { (returnedData, error) -> Void in
+      //Check if error
+      if error != true {
+        if returnedData.isEmpty == true {
+          NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+            completion(false)
+          })
+        }else {
+          NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+            completion(true)
+          })
+        }
+      }
+    }
+  }
+  
+  
+  
   
   
   

@@ -32,7 +32,6 @@ class AddViewController: UIViewController, UITextFieldDelegate, UITextViewDelega
     self.txtInputField.layer.borderWidth = 2.0
     self.txtInputField.layer.borderColor = UIColor.blueColor().CGColor
     self.txtInputField.layer.cornerRadius = 5
-
     self.txtDefinition.layer.borderWidth = 2.0
     self.txtDefinition.layer.borderColor = UIColor.blueColor().CGColor
     self.txtDefinition.layer.cornerRadius = 5
@@ -45,30 +44,56 @@ class AddViewController: UIViewController, UITextFieldDelegate, UITextViewDelega
     
     self.txtInputField.resignFirstResponder()
     
-    let alertController = UIAlertController(title: "Confirmation", message: "Are you shure you want to submit \(txtInputField.text) to the global data base?", preferredStyle: UIAlertControllerStyle.Alert)
     
-    let alertActionDismiss = UIAlertAction(title: "No", style: UIAlertActionStyle.Default, handler: nil)
-    let alertActionSend = UIAlertAction(title: "Submit", style: UIAlertActionStyle.Default) { (action) -> Void in
-      
-      var wordToAdd = PFObject(className: "Words")
-      wordToAdd["word"] = self.txtInputField.text
-      wordToAdd["isRacist"] = self.swtchRacist.on
-      wordToAdd["isSexist"] = self.swtchSexist.on
-      wordToAdd["definition"] = self.txtDefinition.text
-      wordToAdd.saveInBackgroundWithBlock { (didSave, error) -> Void in
-        if didSave {
-          println("Save Success")
-          self.txtInputField.text = ""
-          self.txtDefinition.text = ""
-        }else{
-          println("Save Fail")
-        }
-      }
+    var wordToAdd: NSString = self.txtInputField.text.capitalizedString
+    
+    if wordToAdd == "" {
+      let alertController = UIAlertController(title: "No Can Do", message: "We need a word dude.", preferredStyle: UIAlertControllerStyle.Alert)
+      let alertActionDismiss = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
+      alertController.addAction(alertActionDismiss)
+      self.presentViewController(alertController, animated: true, completion: nil)
+      return
+    } else if wordToAdd.componentsSeparatedByString(" ").count > 1 {
+      let alertController = UIAlertController(title: "No Can Do", message: "No more than one word.", preferredStyle: UIAlertControllerStyle.Alert)
+      let alertActionDismiss = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
+      alertController.addAction(alertActionDismiss)
+      self.presentViewController(alertController, animated: true, completion: nil)
+      return
     }
     
-    alertController.addAction(alertActionDismiss)
-    alertController.addAction(alertActionSend)
-    presentViewController(alertController, animated: true, completion: nil)
+    
+    OffensiveEngine.sharedEngine.checkIfWordExists(wordToAdd, completion: { (test) -> Void in
+      if test == false {
+        let alertController = UIAlertController(title: "Confirmation", message: "Are you shure you want to submit \(wordToAdd) to the global data base?", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let alertActionDismiss = UIAlertAction(title: "No", style: UIAlertActionStyle.Default, handler: nil)
+        let alertActionSend = UIAlertAction(title: "Submit", style: UIAlertActionStyle.Default) { (action) -> Void in
+          
+          var badWordToAdd = PFObject(className: "Words")
+          badWordToAdd["word"] = wordToAdd
+          badWordToAdd["isRacist"] = self.swtchRacist.on
+          badWordToAdd["isSexist"] = self.swtchSexist.on
+          badWordToAdd["definition"] = self.txtDefinition.text
+          badWordToAdd.saveInBackgroundWithBlock { (didSave, error) -> Void in
+            if didSave {
+              println("Save Success")
+              self.txtInputField.text = ""
+              self.txtDefinition.text = ""
+            }else{
+              println("Save Fail")
+            }
+          }
+        }
+        alertController.addAction(alertActionDismiss)
+        alertController.addAction(alertActionSend)
+        self.presentViewController(alertController, animated: true, completion: nil)
+      }else{
+        let alertController = UIAlertController(title: "No Can Do", message: "\(wordToAdd) is already in the data base, please contribute something original.", preferredStyle: UIAlertControllerStyle.Alert)
+        let alertActionDismiss = UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil)
+        alertController.addAction(alertActionDismiss)
+        self.presentViewController(alertController, animated: true, completion: nil)
+      }
+    })
   }
   
   func textViewDidBeginEditing(textView: UITextView) {
