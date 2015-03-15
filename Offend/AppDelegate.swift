@@ -23,7 +23,6 @@ import UIKit
     
     Parse.setApplicationId(appParseKey, clientKey: appClientKey)
     
-    
     //Init the shared instance so that all words are populated. 
     OffensiveEngine.sharedEngine
     

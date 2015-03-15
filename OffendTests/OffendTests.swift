@@ -12,14 +12,36 @@ import Offend
 
 class OffendTests: XCTestCase {
   
-  
+  //Create the engine, we are not using the singleton pattern.
   var OE = OffensiveEngine()
   
+  //Set up funciton where we set up the Offensive engine. 
   override func setUp() {
         super.setUp()
-  
-    OffensiveEngine.sharedEngine
     
+    var appParseKey = "OhF1OMRPtn1H51chOzSxtfic9vd56Aknqpg8FfWE"
+    var appClientKey = "mNa69y5JRo3mRvsafomFYme1mFKYMSHv0XjbrObk"
+    
+    
+    Parse.setApplicationId(appParseKey, clientKey: appClientKey)
+
+    var exception = self.expectationWithDescription("Exception")
+    var query = PFQuery(className: "Words")
+    query.findObjectsInBackgroundWithBlock { (returnedData, error) -> Void in
+      if error != true {
+        for item in returnedData{
+          if let dictionaryForWord = item as? PFObject{
+            self.OE.arrayOfWords.append(dictionaryForWord["word"] as String)
+          }
+        }
+        exception.fulfill()
+      }
+    }
+    
+    self.waitForExpectationsWithTimeout(10, handler: { (error) -> Void in
+      
+      
+    })
     
     
     }
@@ -40,7 +62,7 @@ class OffendTests: XCTestCase {
     }
   
   func testOEArrayOfWordsNotNill() {
-    XCTAssertTrue(OffensiveEngine.sharedEngine.arrayOfWords.count > 0, "Array of words in OE is 0")
+    XCTAssertTrue(OE.arrayOfWords.count > 0, "Array of words in OE is 0")
   }
   
   func testOEParseStringWithEmpty(){
@@ -57,7 +79,7 @@ class OffendTests: XCTestCase {
     
     let theString = "No Good"
     
-    XCTAssert(OffensiveEngine.sharedEngine.parseUserString(theString) == "In order to generate an offensive word we need at least one \"#\" or nothing, Follow the Fucking directions.", "Did not get back expected string")
+    XCTAssert(OE.parseUserString(theString) == "In order to generate an offensive word we need at least one \"#\" or nothing, Follow the Fucking directions.", "Did not get back expected string")
   }
   
   func testOEParseWithTMultipleHash() {
@@ -68,7 +90,15 @@ class OffendTests: XCTestCase {
     
     XCTAssert(results.count == 5, "Didn't get the right count")
     
+  }
+  
+  func testWithMirroredhash(){
     
+    let theString = OE.parseUserString("# this #")
+    
+    let results = theString.componentsSeparatedByString(" ")
+    
+    XCTAssertTrue(results.count == 3, "Does not equal Three")
     
   }
   

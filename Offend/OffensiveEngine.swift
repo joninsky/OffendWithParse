@@ -22,33 +22,52 @@ class OffensiveEngine: NSObject {
   
   override init(){
     super.init()
-    self.getAllWords()
-    
+    self.getAllWords(GlobalStuff.sharedInstance.wantRacist, wantSexist: GlobalStuff.sharedInstance.wantSexist) { (returnedArray) -> Void in
+      self.arrayOfWords = returnedArray
+    }
   }
   
-  func initForTesting(){
-    self.arrayOfWords = ["Shit", "Fuck", "Damn", "Hell"]
-  }
-
-  
-  private func getAllWords() {
+    func getAllWords(wantRacist: Bool, wantSexist: Bool, completion:  ([String]) -> Void) {
     
-    var query = PFQuery(className: "Words")
-    query.findObjectsInBackgroundWithBlock { (returnedData, error) -> Void in
+    
+    //Create the Query object
+    var query: PFQuery?
+    
+    //Decide which predicate to use
+    if wantRacist == false && wantSexist == false {
+      let predicatePG = NSPredicate(format: "isRacist == false AND isSexist == false")
+      query = PFQuery(className: "Words", predicate: predicatePG)
+    }else if wantRacist == false {
+      let predicateNoRacist = NSPredicate(format: "isRacist == false")
+      query = PFQuery(className: "Words", predicate: predicateNoRacist)
+    } else if wantSexist == false {
+      let predicateNoSexist = NSPredicate(format: "isSexist == false")
+      query = PFQuery(className: "Words", predicate: predicateNoSexist)
+    }else{
+      query = PFQuery(className: "Words")
+    }
+    
+    
+    //Do an aSynchronous network call which calls the completion hadler.
+    query!.findObjectsInBackgroundWithBlock { (returnedData, error) -> Void in
+      //Check if error
       if error != true {
+        var arrayToBuild = [String]()
         for item in returnedData{
           if let dictionaryForWord = item as? PFObject{
-            self.arrayOfWords.append(dictionaryForWord["word"] as String)
+            arrayToBuild.append(dictionaryForWord["word"] as String)
+            
           }
         }
-        
+        NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+          completion(arrayToBuild)
+        })
       }
     }
   }
   
   func parseUserString(theString: String) -> String {
     if self.arrayOfWords.isEmpty {
-      self.getAllWords()
       return "No Offensive Words Available"
     }
     if theString.isEmpty {
@@ -88,6 +107,24 @@ class OffensiveEngine: NSObject {
     
     return stringToReturn
   }
+  
+  
+  func getWords(completion: ([PFObject]) -> Void){
+    let query = PFQuery(className: "Words")
+    query.orderByAscending("word")
+    //Do an aSynchronous network call which calls the completion hadler.
+    query!.findObjectsInBackgroundWithBlock { (returnedData, error) -> Void in
+      //Check if error
+      if error != true {
+        
+        NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+          completion(returnedData as [PFObject])
+        })
+      }
+    }
+  }
+  
+  
   
   
 //End Class

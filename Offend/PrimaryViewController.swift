@@ -16,6 +16,9 @@ class PrimaryViewController: UIViewController, UITextViewDelegate{
   @IBOutlet weak var generateButton: UIButton!
   @IBOutlet var doneButton: UIBarButtonItem!
   @IBOutlet weak var txtViewHeight: NSLayoutConstraint!
+  @IBOutlet weak var racistSwitch: UISwitch!
+  @IBOutlet weak var sexistSwitch: UISwitch!
+  
   
   var userString: String = "Select to add your own words! Put an \"#\" where you want an offensive word to appear."
   
@@ -38,6 +41,9 @@ class PrimaryViewController: UIViewController, UITextViewDelegate{
     self.navigationController?.navigationBar.barTintColor = UIColor.blueColor()
     self.doneButton.enabled = false
     self.doneButton.title = nil
+    
+    self.racistSwitch.on = GlobalStuff.sharedInstance.wantRacist
+    self.sexistSwitch.on = GlobalStuff.sharedInstance.wantSexist
     
   }
   
@@ -98,6 +104,23 @@ class PrimaryViewController: UIViewController, UITextViewDelegate{
     
   }
   
+  @IBAction func racistSelect(sender: AnyObject) {
+    GlobalStuff.sharedInstance.wantRacist = self.racistSwitch.on
+    OffensiveEngine.sharedEngine.getAllWords(GlobalStuff.sharedInstance.wantRacist, wantSexist: GlobalStuff.sharedInstance.wantSexist) { (newResults) -> Void in
+      
+      OffensiveEngine.sharedEngine.arrayOfWords = newResults
+    }
+    
+  }
+  
+  @IBAction func sexistSelect(sender: AnyObject) {
+    GlobalStuff.sharedInstance.wantSexist = self.sexistSwitch.on
+    OffensiveEngine.sharedEngine.getAllWords(GlobalStuff.sharedInstance.wantRacist, wantSexist: GlobalStuff.sharedInstance.wantSexist) { (newResults) -> Void in
+      
+      OffensiveEngine.sharedEngine.arrayOfWords = newResults
+    }
+  }
+  
   
   @IBAction func doneButtonPressed(sender: AnyObject) {
     self.txtMyPhrase.resignFirstResponder()
@@ -109,6 +132,11 @@ class PrimaryViewController: UIViewController, UITextViewDelegate{
     self.txtMyPhrase.resignFirstResponder()
   }
   
+  
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+   let DVC = segue.destinationViewController as ShareViewController
+    DVC.thePhrase = self.txtMyPhrase.text
+  }
   
   
 
