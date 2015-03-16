@@ -24,11 +24,30 @@ import CoreData
     
     Parse.setApplicationId(appParseKey, clientKey: appClientKey)
     
-    //Init the shared instance so that all words are populated. 
+    //Check to see if this is the first time the app has been opened.
+    let fetchRequest = NSFetchRequest(entityName: "GlobalVariables")
+    let numberOfResults = self.managedObjectContext!.countForFetchRequest(fetchRequest, error: nil)
+    //Make sure the singleton of Offensive engine is created. 
     OffensiveEngine.sharedEngine
     
+    if numberOfResults == 0{
+      self.seedGlobalData()
+      GlobalStuff.sharedInstance
+    }else{
+      GlobalStuff.sharedInstance
+    }
     
     return true
+  }
+  
+  
+  func seedGlobalData(){
+    let theDecisions = NSEntityDescription.insertNewObjectForEntityForName("GlobalVariables", inManagedObjectContext: self.managedObjectContext!) as? GlobalVariables
+    theDecisions?.wantRacist = false
+    theDecisions?.wantSexist = false
+    theDecisions?.userName = ""
+    self.managedObjectContext!.save(nil)
+    
   }
 
    func applicationWillResignActive(application: UIApplication) {
@@ -51,6 +70,7 @@ import CoreData
 
    func applicationWillTerminate(application: UIApplication) {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    GlobalStuff.sharedInstance.saveToCoreData()
   }
   
   // MARK: - Core Data stack

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C1510" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="GlobalVariables" representedClassName="GlobalVariables" syncable="YES">
+    <entity name="GlobalVariables" representedClassName="Offend.GlobalVariables" syncable="YES">
         <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="wantRacist" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="wantSexist" optional="YES" attributeType="Boolean" syncable="YES"/>

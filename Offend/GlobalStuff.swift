@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class GlobalStuff: NSObject {
   
@@ -18,6 +19,8 @@ class GlobalStuff: NSObject {
     return Static.instance
   }
   
+  var variableInstance: GlobalVariables?
+  
   var wantRacist: Bool!
   var wantSexist: Bool!
   
@@ -28,21 +31,16 @@ class GlobalStuff: NSObject {
   
   override init() {
     super.init()
-    self.wantRacist = false
-    self.wantSexist = false
     self.appDelegate = UIApplication.sharedApplication().delegate as AppDelegate?
+    self.setFromCoreData()
   }
   
   
   func makeUser(theName: String) {
-    
     userObject = PFObject(className: "Users")
     userObject!.setObject(theName, forKey: "userstring")
     self.userName = theName
     self.saveUserStuff()
-    
-    
-
   }
   
   
@@ -58,11 +56,8 @@ class GlobalStuff: NSObject {
   }
   
   func checkIfUserExists(userName: String, completion: (Bool) -> Void) {
-    
     let query = PFQuery(className: "Users")
-    
-    query.whereKey("usersString", equalTo: "\(userName)")
-    
+    query.whereKey("userstring", equalTo: "\(userName)")
     query.findObjectsInBackgroundWithBlock { (returnedUser, error) -> Void in
       if error != true {
         if returnedUser.isEmpty == true {
@@ -78,6 +73,47 @@ class GlobalStuff: NSObject {
     }
   }
   
+  //CoreData stuff 
   
+  func saveToCoreData() {
+    self.variableInstance?.wantRacist = self.wantRacist
+    self.variableInstance?.wantSexist = self.wantSexist
+    self.variableInstance?.userName = self.userName!
+    
+    self.appDelegate?.managedObjectContext?.save(nil)
+  }
+  
+  func setFromCoreData() {
+    let fetchRequest = NSFetchRequest(entityName: "GlobalVariables")
+    if let results = self.appDelegate!.managedObjectContext?.executeFetchRequest(fetchRequest, error: nil) {
+      
+      self.variableInstance = results.first as? GlobalVariables
+      self.wantRacist = self.variableInstance!.wantRacist.boolValue
+      self.wantSexist = self.variableInstance!.wantSexist.boolValue
+      self.userName = self.variableInstance!.userName
+      if self.userObject == nil {
+        let query = PFQuery(className: "Users")
+        query.whereKey("userstring", equalTo: "\(self.userName!)")
+        query.findObjectsInBackgroundWithBlock { (returnedUser, error) -> Void in
+          if error != true {
+            println(returnedUser)
+            if returnedUser.isEmpty != true {
+              self.userObject = returnedUser.first as? PFObject
+            }
+          }
+        }
+      }
+    }
+  }
+  
+
   
 }
+
+
+
+
+
+
+
+

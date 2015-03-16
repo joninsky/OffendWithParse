@@ -8,8 +8,9 @@
 
 import UIKit
 
-class ShareViewController: UIViewController {
+class ShareViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
   
+  @IBOutlet weak var myImageView: UIImageView!
   @IBOutlet weak var txtPhraseToShare: UILabel!
   @IBOutlet weak var shareButton: UIButton!
   var thePhrase: String!
@@ -20,12 +21,26 @@ class ShareViewController: UIViewController {
   
     txtPhraseToShare.text = thePhrase
     
+    
+    txtPhraseToShare.layer.borderWidth = 2.0
+    txtPhraseToShare.layer.borderColor = UIColor.blueColor().CGColor
+    txtPhraseToShare.layer.cornerRadius = 5
+    
+    shareButton.layer.borderWidth = 2.0
+    shareButton.layer.borderColor = UIColor.blueColor().CGColor
+    shareButton.layer.cornerRadius = 5
+    
+    myImageView.layer.borderWidth = 2.0
+    myImageView.layer.borderColor = UIColor.blueColor().CGColor
+    myImageView.layer.cornerRadius = 5
+    
+    
   }
   
   
   @IBAction func shareAction(sender: AnyObject) {
     
-    if GlobalStuff.sharedInstance.userObject == NSNull() {
+    if GlobalStuff.sharedInstance.userName == "" {
       let alertController = UIAlertController(title: "Name", message: "We need a user name from you in order to share your offensive phrase", preferredStyle: UIAlertControllerStyle.Alert)
       
       //Dismiss Alert action
@@ -64,18 +79,40 @@ class ShareViewController: UIViewController {
       presentViewController(alertController, animated: true, completion: nil)
       
     }else{
+      self.txtPhraseToShare.text = self.thePhrase
       let newPhrase = PFObject(className: "SavedPhrases")
       newPhrase["phrase"] = self.txtPhraseToShare.text
-      newPhrase["user"] = GlobalStuff.sharedInstance.userName
+      newPhrase["user"] = GlobalStuff.sharedInstance.userObject!
       newPhrase.saveInBackgroundWithBlock({ (didSave, error) -> Void in
         if didSave {
-          println("User Created!")
+          println("Phrase Saved")
         }else{
-          println("User Not Created")
+          println("Phrase not saved")
         }
       })
       
     }
+  }
+  
+  @IBAction func cameraButtonAction(sender: AnyObject) {
+    let imagePickerController = UIImagePickerController()
+    imagePickerController.sourceType = UIImagePickerControllerSourceType.Camera
+    imagePickerController.allowsEditing = true
+    imagePickerController.delegate = self
+    self.presentViewController(imagePickerController, animated: true, completion: nil)
+  }
+  
+  //MARK: Image Picker COntroller delegate
+  
+  func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+    
+    self.myImageView.image = info[UIImagePickerControllerEditedImage] as? UIImage
+    //self.navigationController?.popViewControllerAnimated(true)
+    picker.dismissViewControllerAnimated(true, completion: nil)
+  }
+  
+  func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+    picker.dismissViewControllerAnimated(true, completion: nil)
   }
   
   
