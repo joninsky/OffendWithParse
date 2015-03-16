@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PhraseCell" customModule="Offend" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="phraseCell" rowHeight="125" id="Gd5-fB-TZf" customClass="PhraseCell" customModule="Offend" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="125"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Gd5-fB-TZf" id="Hc2-28-vHC">
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dlZ-Ne-htp">
+                        <rect key="frame" x="8" y="8" width="100" height="100"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="DJW-aX-u6p"/>
+                            <constraint firstAttribute="height" constant="100" id="NeM-Rc-1yn"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Posted By:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oAw-hd-Qjh">
+                        <rect key="frame" x="116" y="8" width="196" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WXM-Pu-rsO">
+                        <rect key="frame" x="116" y="37" width="196" height="71"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="WXM-Pu-rsO" firstAttribute="leading" secondItem="oAw-hd-Qjh" secondAttribute="leading" id="Fhu-Iv-pzy"/>
+                    <constraint firstItem="dlZ-Ne-htp" firstAttribute="top" secondItem="Hc2-28-vHC" secondAttribute="topMargin" id="Jtq-Q3-7nm"/>
+                    <constraint firstItem="dlZ-Ne-htp" firstAttribute="top" secondItem="oAw-hd-Qjh" secondAttribute="top" id="LfT-GS-RlY"/>
+                    <constraint firstItem="WXM-Pu-rsO" firstAttribute="leading" secondItem="dlZ-Ne-htp" secondAttribute="trailing" constant="8" id="QDz-f7-Ihb"/>
+                    <constraint firstItem="oAw-hd-Qjh" firstAttribute="leading" secondItem="dlZ-Ne-htp" secondAttribute="trailing" constant="8" id="VgN-6b-9VZ"/>
+                    <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="dlZ-Ne-htp" secondAttribute="bottom" constant="8" id="Vy0-kK-Aae"/>
+                    <constraint firstItem="oAw-hd-Qjh" firstAttribute="trailing" secondItem="Hc2-28-vHC" secondAttribute="trailingMargin" id="aJS-Te-GF7"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="WXM-Pu-rsO" secondAttribute="bottom" constant="8" id="ayw-SB-ZUK"/>
+                    <constraint firstItem="dlZ-Ne-htp" firstAttribute="leading" secondItem="Hc2-28-vHC" secondAttribute="leadingMargin" id="gbE-p4-2sr"/>
+                    <constraint firstItem="WXM-Pu-rsO" firstAttribute="top" secondItem="oAw-hd-Qjh" secondAttribute="bottom" constant="8" id="sK4-gI-5Ks"/>
+                    <constraint firstItem="WXM-Pu-rsO" firstAttribute="trailing" secondItem="Hc2-28-vHC" secondAttribute="trailingMargin" id="ueT-6d-Vsa"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="phraseImage" destination="dlZ-Ne-htp" id="MNC-ui-w2P"/>
+                <outlet property="phraseLabel" destination="WXM-Pu-rsO" id="laL-EH-zhi"/>
+                <outlet property="postedByLabel" destination="oAw-hd-Qjh" id="ILL-rz-VT1"/>
+            </connections>
+            <point key="canvasLocation" x="115" y="251.5"/>
+        </tableViewCell>
+    </objects>
+</document>

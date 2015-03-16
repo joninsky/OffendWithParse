@@ -22,6 +22,9 @@ class AddViewController: UIViewController, UITextFieldDelegate, UITextViewDelega
   
   @IBOutlet weak var addWordButton: UIButton!
   
+  @IBOutlet weak var doneButton: UIBarButtonItem!
+  
+  var viewCenter: CGPoint?
   override func viewDidLoad() {
     super.viewDidLoad()
     self.txtInputField.delegate = self
@@ -35,7 +38,11 @@ class AddViewController: UIViewController, UITextFieldDelegate, UITextViewDelega
     self.txtDefinition.layer.borderWidth = 2.0
     self.txtDefinition.layer.borderColor = UIColor.blueColor().CGColor
     self.txtDefinition.layer.cornerRadius = 5
-  
+    viewCenter = self.view.center
+    
+    self.doneButton.enabled = false
+    self.doneButton.title = ""
+
     self.navigationItem.title = "Add A Word!"
   }
   
@@ -102,10 +109,28 @@ class AddViewController: UIViewController, UITextFieldDelegate, UITextViewDelega
         self.txtDefinition.text = ""
       }
     }
+    
+    self.doneButton.enabled = true
+    self.doneButton.title = "Done"
+    
+    let newCenter = CGPointMake(self.viewCenter!.x, self.viewCenter!.y - 180)
+    UIView.animateWithDuration(0.2, animations: { () -> Void in
+      
+      self.view.center = newCenter
+    })
+    
   }
   
   func textViewDidEndEditing(textView: UITextView) {
     self.txtDefinition.resignFirstResponder()
+    
+    UIView.animateWithDuration(0.2, animations: { () -> Void in
+      self.view.center = self.viewCenter!
+    })
+    
+    self.doneButton.enabled = false
+    self.doneButton.title = ""
+    
   }
   
   
@@ -135,6 +160,15 @@ class AddViewController: UIViewController, UITextFieldDelegate, UITextViewDelega
     }
     
   }
+  
+  
+  @IBAction func doneButtonPressed(sender: AnyObject) {
+    
+    self.txtDefinition.resignFirstResponder()
+    
+    
+  }
+  
   
   
 }

@@ -20,21 +20,24 @@ import CoreData
     
     var appParseKey = "OhF1OMRPtn1H51chOzSxtfic9vd56Aknqpg8FfWE"
     var appClientKey = "mNa69y5JRo3mRvsafomFYme1mFKYMSHv0XjbrObk"
-    
+    println(UIApplication.sharedApplication().statusBarOrientation)
     
     Parse.setApplicationId(appParseKey, clientKey: appClientKey)
     
     //Check to see if this is the first time the app has been opened.
     let fetchRequest = NSFetchRequest(entityName: "GlobalVariables")
     let numberOfResults = self.managedObjectContext!.countForFetchRequest(fetchRequest, error: nil)
-    //Make sure the singleton of Offensive engine is created. 
-    OffensiveEngine.sharedEngine
+    
     
     if numberOfResults == 0{
       self.seedGlobalData()
       GlobalStuff.sharedInstance
+      //Make sure the singleton of Offensive engine is created.
+      OffensiveEngine.sharedEngine
     }else{
       GlobalStuff.sharedInstance
+      //Make sure the singleton of Offensive engine is created.
+      OffensiveEngine.sharedEngine
     }
     
     return true

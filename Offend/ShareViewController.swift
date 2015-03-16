@@ -34,6 +34,7 @@ class ShareViewController: UIViewController, UIImagePickerControllerDelegate, UI
     myImageView.layer.borderColor = UIColor.blueColor().CGColor
     myImageView.layer.cornerRadius = 5
     
+    self.navigationItem.title = "Share"
     
   }
   
@@ -54,15 +55,25 @@ class ShareViewController: UIViewController, UIImagePickerControllerDelegate, UI
         GlobalStuff.sharedInstance.checkIfUserExists(field.text, completion: { (decision) -> Void in
           if decision == false {
             GlobalStuff.sharedInstance.makeUser(field.text)
-            
+            var imageData: NSData?
+            var imageFile: PFFile?
+            if self.myImageView.image != nil {
+              imageData = UIImagePNGRepresentation(self.myImageView.image)
+              imageFile = PFFile(name: "NewImage.png", data: imageData, contentType: "Image")
+            }
             let myNewPhrase = PFObject(className: "SavedPhrases")
             myNewPhrase.setObject(self.txtPhraseToShare.text, forKey: "phrase")
             myNewPhrase.setObject(GlobalStuff.sharedInstance.userObject!, forKey: "user")
+            if imageFile != nil{
+              myNewPhrase["attachedImage"] = imageFile
+            }
             myNewPhrase.saveInBackgroundWithBlock({ (didSave, error) -> Void in
-
+              if didSave {
+                println("Phrase Saved")
+              }else{
+                println("Phrase not saved")
+              }
             })
-            
-            
           }else{
             println("User Exists!")
           }
@@ -79,18 +90,35 @@ class ShareViewController: UIViewController, UIImagePickerControllerDelegate, UI
       presentViewController(alertController, animated: true, completion: nil)
       
     }else{
-      self.txtPhraseToShare.text = self.thePhrase
-      let newPhrase = PFObject(className: "SavedPhrases")
-      newPhrase["phrase"] = self.txtPhraseToShare.text
-      newPhrase["user"] = GlobalStuff.sharedInstance.userObject!
-      newPhrase.saveInBackgroundWithBlock({ (didSave, error) -> Void in
-        if didSave {
-          println("Phrase Saved")
-        }else{
-          println("Phrase not saved")
+      let alertController = UIAlertController(title: "You Shure?", message: "Are you shure you want to upload this phrase? All phrases can be viewed in the Explore tab.", preferredStyle: UIAlertControllerStyle.Alert)
+      
+      //Dismiss Alert action
+      let alertActionDismiss = UIAlertAction(title: "Yes!", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
+        var imageData: NSData?
+        var imageFile: PFFile?
+        if self.myImageView.image != nil {
+          imageData = UIImagePNGRepresentation(self.myImageView.image)
+          imageFile = PFFile(name: "NewImage.png", data: imageData, contentType: "Image")
         }
+        self.txtPhraseToShare.text = self.thePhrase
+        let newPhrase = PFObject(className: "SavedPhrases")
+        newPhrase["phrase"] = self.txtPhraseToShare.text
+        newPhrase["user"] = GlobalStuff.sharedInstance.userObject!
+        if imageFile != nil{
+          newPhrase["attachedImage"] = imageFile
+        }
+        newPhrase.saveInBackgroundWithBlock({ (didSave, error) -> Void in
+          if didSave {
+            println("Phrase Saved")
+            self.navigationController?.popViewControllerAnimated(true)
+          }else{
+            println("Phrase not saved")
+          }
+        })
       })
       
+      alertController.addAction(alertActionDismiss)
+      presentViewController(alertController, animated: true, completion: nil)
     }
   }
   
@@ -102,7 +130,7 @@ class ShareViewController: UIViewController, UIImagePickerControllerDelegate, UI
     self.presentViewController(imagePickerController, animated: true, completion: nil)
   }
   
-  //MARK: Image Picker COntroller delegate
+  //MARK: Image Picker Controller delegate
   
   func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
     

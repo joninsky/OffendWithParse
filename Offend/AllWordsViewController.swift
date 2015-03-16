@@ -18,15 +18,24 @@ class AllWordViewController: UIViewController, UITableViewDataSource, UITableVie
     super.viewDidLoad()
     self.myTableView.delegate = self
     self.myTableView.dataSource = self
+    self.myTableView.registerNib(UINib(nibName: "AllCells", bundle: NSBundle.mainBundle()), forCellReuseIdentifier: "allCell")
+    
+    
     OffensiveEngine.sharedEngine.getWords { (data) -> Void in
       
       self.arrayOfAllWords = data
       self.myTableView.reloadData()
+      self.myTableView.layoutIfNeeded()
     }
   
     self.navigationItem.title = "All Words!"
-    self.myTableView.estimatedRowHeight = 100
+    self.myTableView.estimatedRowHeight = 41
     self.myTableView.rowHeight = UITableViewAutomaticDimension
+  }
+  
+  
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
   }
   
   
@@ -69,14 +78,8 @@ class AllWordViewController: UIViewController, UITableViewDataSource, UITableVie
 
     }
     
-    
+    Cell.layoutIfNeeded()
     return Cell
     
   }
-  
-  
-  
-  
-  
-  
 }

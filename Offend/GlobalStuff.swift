@@ -96,7 +96,6 @@ class GlobalStuff: NSObject {
         query.whereKey("userstring", equalTo: "\(self.userName!)")
         query.findObjectsInBackgroundWithBlock { (returnedUser, error) -> Void in
           if error != true {
-            println(returnedUser)
             if returnedUser.isEmpty != true {
               self.userObject = returnedUser.first as? PFObject
             }

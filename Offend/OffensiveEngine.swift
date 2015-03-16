@@ -68,7 +68,7 @@ class OffensiveEngine: NSObject {
   
   func parseUserString(theString: String) -> String {
     if self.arrayOfWords.isEmpty {
-      return "No Offensive Words Available"
+      return "No Offensive Words Available, check internet connection."
     }
     if theString.isEmpty {
       var positionOne: UInt32 = arc4random_uniform(UInt32(self.arrayOfWords.count))
@@ -142,6 +142,60 @@ class OffensiveEngine: NSObject {
           })
         }
       }
+    }
+  }
+  
+  func findPostsForUser(searchedName: String, completion: ([PFObject]) ->Void){
+    
+    GlobalStuff.sharedInstance.checkIfUserExists(searchedName, completion: { (decision) -> Void in
+      if decision{
+        
+        let userQuery = PFQuery(className: "Users")
+        userQuery.whereKey("userstring", equalTo: "\(searchedName)")
+        userQuery.findObjectsInBackgroundWithBlock({ (returnedUser, error) -> Void in
+          if error != true{
+            let userObject = returnedUser.first as? PFObject
+            
+            let query = PFQuery(className: "SavedPhrases")
+            query.whereKey("user", equalTo: userObject)
+            
+            query.findObjectsInBackgroundWithBlock { (returnedData, error) -> Void in
+              if error != true {
+                NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+                  completion(returnedData as [PFObject])
+                })
+              }
+            }
+            
+          }
+        })
+      }else{
+        NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+          completion([])
+        })
+      }
+    })
+  }
+  
+  func getUserName(idString: String, completion: (String) -> Void){
+    let query = PFQuery(className: "Users")
+    
+    query.getObjectInBackgroundWithId("\(idString)", block: { (theObject, error) -> Void in
+      if error != true {
+        NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+          completion(theObject["userstring"] as String)
+        })
+      }
+    })
+  }
+  
+  
+  func getPhrases(completion: ([PFObject]) -> Void){
+    let query = PFQuery(className: "SavedPhrases")
+    query.findObjectsInBackgroundWithBlock { (returnedObjects, error) -> Void in
+      NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+        completion(returnedObjects as [PFObject])
+      })
     }
   }
   
